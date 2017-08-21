@@ -455,11 +455,17 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
+                    b.Property<string>("Email");
+
+                    b.Property<string>("MobileNo");
+
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("RecoveryEmail");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HordeFlow.HR.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class HrInitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -142,8 +142,11 @@ namespace HordeFlow.HR.Migrations
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MobileNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RecoveryEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true),

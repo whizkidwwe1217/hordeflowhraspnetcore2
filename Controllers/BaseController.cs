@@ -11,8 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using HordeFlow.HR.Repositories.Interfaces;
 using HordeFlow.HR.Infrastructure.Models;
 
-namespace HordeFlow.Hris.Controllers
+namespace HordeFlow.HR.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public abstract class BaseController<T> : Controller where T : class, IBaseEntity, new()
     {

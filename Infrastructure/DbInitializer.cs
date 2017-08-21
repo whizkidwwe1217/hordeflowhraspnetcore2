@@ -8,11 +8,6 @@ namespace HordeFlow.HR.Infrastructure
         public static async System.Threading.Tasks.Task InitializeAsync(DbContext context) 
         {
             await context.Database.EnsureCreatedAsync();
-
-            // if(context.Set<Employee>().Any())
-            //     return;
-            
-            //context.SaveChanges();
         }
     }
 }

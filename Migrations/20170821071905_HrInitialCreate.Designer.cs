@@ -12,8 +12,8 @@ using System;
 namespace HordeFlow.HR.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20170821011209_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20170821071905_HrInitialCreate")]
+    partial class HrInitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -456,11 +456,17 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
+                    b.Property<string>("Email");
+
+                    b.Property<string>("MobileNo");
+
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("RecoveryEmail");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()

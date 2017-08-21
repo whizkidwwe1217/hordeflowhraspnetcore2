@@ -11,6 +11,12 @@ dotnet ef migrations remove
 dotnet ef database update
 dotnet ef database drop
 
+## Articles
+
+### Security
+https://dev.to/samueleresca/developing-token-authentication-using-aspnet-core
+https://logcorner.com/token-based-authentication-using-asp-net-web-api-core/
+
 ## Troubleshooting
 
 ### 1. How to fix 'No executable found matching command "dotnet-ef"'

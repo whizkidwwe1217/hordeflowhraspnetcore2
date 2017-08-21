@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure;
+using HordeFlow.HR.Infrastructure.Security;
 using HordeFlow.HR.Repositories;
 using HordeFlow.HR.Repositories.Implementation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +45,9 @@ namespace HordeFlow.HR
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
 
+            // Security
+            services.ConfigureAuthentication();
+
             // Register Repositories
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
@@ -65,6 +71,8 @@ namespace HordeFlow.HR
             }
 
             app.UseMvc();
+
+            app.ConfigureAuthentication();
 
             // Runs migrations and seeds data that will ensure that the database exists or created.
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
