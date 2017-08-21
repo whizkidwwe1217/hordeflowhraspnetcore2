@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure;
+using HordeFlow.HR.Repositories;
+using HordeFlow.HR.Repositories.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +32,19 @@ namespace HordeFlow.HR
             #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
             var connection = @"Server=Wendell\SQL2016;Database=hordeflowhr;UID=sa;Pwd=masterkey;MultipleActiveResultSets=true";
             services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
+
+            // Register Repositories
+            services.AddTransient<ICountryRepository, CountryRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IStateRepository, StateRepository>();
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<IDesignationRepository, DesignationRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IEmployeeAddressRepository, EmployeeAddressRepository>();
+            services.AddTransient<ICompanyAddressRepository, CompanyAddressRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

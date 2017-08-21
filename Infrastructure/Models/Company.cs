@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HordeFlow.HR.Infrastructure.Models
 {
-    public class Company : CompanyEntity
+    public class Company : BaseEntity
     {
         public string Code { get; set; }
         public string Name { get; set; }
