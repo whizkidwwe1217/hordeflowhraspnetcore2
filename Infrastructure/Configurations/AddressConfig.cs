@@ -9,7 +9,6 @@ namespace HordeFlow.HR.Infrastructure.Configurations
     {
         public override void Map(EntityTypeBuilder<Address> b)
         {
-            b.HasKey(e => e.Id);
             b.Property(e => e.AddressLine1).HasMaxLength(300).IsRequired();
             b.Property(e => e.AddressLine2).HasMaxLength(300);
             b.Property(e => e.PostalCode).HasMaxLength(20);

@@ -9,7 +9,6 @@ namespace HordeFlow.HR.Infrastructure.Configurations
     {
         public override void Map(EntityTypeBuilder<State> b)
         {
-            b.HasKey(e => e.Id);
             b.Property(e => e.Code).HasMaxLength(50).IsRequired();
             b.Property(e => e.Name).HasMaxLength(50).IsRequired();
             b.Property(e => e.CountryId).IsRequired();

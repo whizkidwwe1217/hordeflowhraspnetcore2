@@ -12,7 +12,7 @@ using System;
 namespace HordeFlow.HR.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20170820160713_InitialCreate")]
+    [Migration("20170821011209_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,7 +115,8 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -350,7 +351,8 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("ModifiedDate");
 

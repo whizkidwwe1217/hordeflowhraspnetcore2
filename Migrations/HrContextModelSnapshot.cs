@@ -114,7 +114,8 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -349,7 +350,8 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("ModifiedDate");
 

@@ -9,7 +9,6 @@ namespace HordeFlow.HR.Infrastructure.Configurations
     {
         public override void Map(EntityTypeBuilder<Designation> b)
         {
-            b.HasKey(e => e.Id);
             b.Property(e => e.Active).HasDefaultValue(true);
             b.Property(e => e.Name).HasMaxLength(50).IsRequired();
             b.HasIndex(e => new { e.CompanyId, e.Name }).IsUnique();

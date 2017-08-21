@@ -38,7 +38,7 @@ namespace HordeFlow.Hris.Controllers
                 var entities = await repository.Search(currentPage, pageSize, filter, sort, fields);
                 return Ok(entities);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
@@ -53,7 +53,6 @@ namespace HordeFlow.Hris.Controllers
             return NotFound(entity);
         }
 
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] T entity)
         {
@@ -62,30 +61,44 @@ namespace HordeFlow.Hris.Controllers
                 return BadRequest();
             }
 
-            repository.Update(entity);
+            var persistedEntity = await repository.Get(id);
+            if(persistedEntity == null)
+            {
+                return NotFound();   
+            }
+
+            //repository.Update(entity);
             await repository.Commit();
+            
             return new NoContentResult();
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]T entity)
         {
+            if(entity == null)
+                return BadRequest();
+
             await repository.Insert(entity);
             await repository.Commit();
-            return Ok(entity);
+            return CreatedAtAction("Get", new { id = entity.Id }, entity); // This will return the location of the inserted entity.
+            //return Ok(entity);
         }
 
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            repository.DeleteWhere(e => e.Id == id);
+            var persistedEntity = await repository.Get(id);
+            if(persistedEntity == null)
+            {
+                return NotFound();   
+            }
+
+            repository.Delete(persistedEntity);
             await repository.Commit();
             return new NoContentResult();
         }
 
-        [Authorize]
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> Sync([FromBody]BulkEntity<T> entities)

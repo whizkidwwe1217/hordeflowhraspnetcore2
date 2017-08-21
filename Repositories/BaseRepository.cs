@@ -169,14 +169,16 @@ namespace HordeFlow.HR.Repositories
 
         public void Update(T entity)
         {
-            EntityEntry dbEntityEntry = context.Entry<T>(entity);
-            dbEntityEntry.State = EntityState.Modified;
+            // EntityEntry dbEntityEntry = context.Entry<T>(entity);
+            // dbEntityEntry.State = EntityState.Modified;
+            context.Update(entity);
         }
 
         public void Delete(T entity)
         {
-            EntityEntry dbEntityEntry = context.Entry<T>(entity);
-            dbEntityEntry.State = EntityState.Deleted;
+            // EntityEntry dbEntityEntry = context.Entry<T>(entity);
+            // dbEntityEntry.State = EntityState.Deleted;
+            context.Remove(entity);
         }
 
         public void DeleteWhere(Expression<Func<T, bool>> predicate)
