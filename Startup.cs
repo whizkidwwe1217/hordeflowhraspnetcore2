@@ -45,6 +45,9 @@ namespace HordeFlow.HR
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
 
+            // Cross-Origin Resource Sharing
+            // Make sure to always call this before authentication.
+            services.AddCors();
             // Security
             services.ConfigureAuthentication();
 
@@ -70,16 +73,17 @@ namespace HordeFlow.HR
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
-
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.ConfigureAuthentication();
+
+            app.UseMvc();
 
             // Runs migrations and seeds data that will ensure that the database exists or created.
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<HrContext>();
                 await context.Database.MigrateAsync();
-                await DbInitializer.InitializeAsync(context);
+                await app.SeedAsync(context);
             }
         }
     }

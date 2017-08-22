@@ -15,6 +15,7 @@ namespace HordeFlow.HR.Infrastructure.Models
         public ICollection<Department> Departments { get; set; }
         public ICollection<Team> Teams { get; set; }
         public ICollection<Designation> Designations { get; set; }
+        public int? CompanyAddressId { get; set; }
         public ICollection<CompanyAddress> CompanyAddresses { get; set; }
     }
 }
