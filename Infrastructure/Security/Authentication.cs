@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -14,27 +15,24 @@ namespace HordeFlow.HR.Infrastructure.Security
 {
     public static class Authentication
     {
-        // The secret key every token will be signed with.
-        // Keep this safe on the server!
-        private static readonly string secretKey = "mysupersecret_secretkey!123";
-
-        public static void ConfigureAuthentication(this IServiceCollection services)
+        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            // The secret key every token will be signed with.
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["TokenAuthentication:SecretKey"]));
 
             var tokenValidationParameters = new TokenValidationParameters
             {
-                // The signing key must match!
+                // The signing key must match!, 
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
 
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
+                ValidIssuer = configuration["TokenAuthentication:Issuer"],
 
                 // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
+                ValidAudience = configuration["TokenAuthentication:Audience"],
 
                 // Validate the token expiry
                 ValidateLifetime = true,
@@ -62,7 +60,7 @@ namespace HordeFlow.HR.Infrastructure.Security
 
             services.AddAuthorization(options => 
             {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser() .Build(); 
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build(); 
             });
 
             // services.AddJwtBearerAuthentication(options => {
@@ -71,15 +69,15 @@ namespace HordeFlow.HR.Infrastructure.Security
             //     options.ClaimsIssuer = "ExampleIssuer";
             // }); 
         }
-        public static void ConfigureAuthentication(this IApplicationBuilder app)
+        public static void UseAuthentication(this IApplicationBuilder app, IConfiguration configuration)
         {
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["TokenAuthentication:SecretKey"]));
 
             app.UseSimpleTokenProvider(new TokenProviderOptions
             {
-                Path = "/api/token",
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
+                Path = configuration["TokenAuthentication:TokenPath"],
+                Audience = configuration["TokenAuthentication:Audience"],
+                Issuer = configuration["TokenAuthentication:Issuer"],
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
                 IdentityResolver = GetIdentity
             });            

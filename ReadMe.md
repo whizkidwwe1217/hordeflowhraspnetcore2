@@ -17,6 +17,9 @@ dotnet ef database drop
 https://dev.to/samueleresca/developing-token-authentication-using-aspnet-core
 https://logcorner.com/token-based-authentication-using-asp-net-web-api-core/
 
+### RBAC
+https://www.codeproject.com/Articles/1079552/Custom-Roles-Based-Access-Control-RBAC-in-ASP-NE
+
 ## Troubleshooting
 
 ### 1. How to fix 'No executable found matching command "dotnet-ef"'

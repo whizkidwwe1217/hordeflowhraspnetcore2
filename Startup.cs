@@ -49,7 +49,7 @@ namespace HordeFlow.HR
             // Make sure to always call this before authentication.
             services.AddCors();
             // Security
-            services.ConfigureAuthentication();
+            services.ConfigureAuthentication(Configuration);
 
             // Register Repositories
             services.AddTransient<ICountryRepository, CountryRepository>();
@@ -74,7 +74,7 @@ namespace HordeFlow.HR
             }
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            app.ConfigureAuthentication();
+            app.UseAuthentication(Configuration);
 
             app.UseMvc();
 

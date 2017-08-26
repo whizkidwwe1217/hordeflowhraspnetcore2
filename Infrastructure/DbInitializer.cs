@@ -22,6 +22,16 @@ namespace HordeFlow.HR.Infrastructure
                 Name = "Acme"
             };
             await context.Companies.AddAsync(company);
+
+            var user = new User()
+            {
+                Company = company,
+                Username = "wendell",
+                Password = "1234"
+            };
+
+            await context.Users.AddAsync(user);
+            
             await context.SaveChangesAsync();
         }
     }
