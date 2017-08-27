@@ -23,14 +23,47 @@ namespace HordeFlow.HR.Infrastructure
             };
             await context.Companies.AddAsync(company);
 
-            var user = new User()
+            var role = new Role()
             {
                 Company = company,
-                Username = "wendell",
+                Name = "Admin",
+                Description = "Administrator",
+                IsSystemAdministrator = true
+            };
+
+            await context.Roles.AddAsync(role);
+
+            var permission = new Permission()
+            {
+                Name = "admin-create",
+                Description = "Allows creating new users."
+            };
+
+            await context.Permissions.AddAsync(permission);
+
+            var rolePermission = new RolePermission()
+            {
+                Role = role,
+                Permission = permission
+            };
+
+            await context.RolePermissions.AddAsync(rolePermission);
+
+            var user = new User("wendell")
+            {
+                Company = company,
                 Password = "1234"
             };
 
             await context.Users.AddAsync(user);
+
+            var userRole = new UserRole()
+            {
+                Role = role,
+                User = user
+            };
+
+            await context.UserRoles.AddAsync(userRole);
             
             await context.SaveChangesAsync();
         }

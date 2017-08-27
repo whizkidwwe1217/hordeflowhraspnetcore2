@@ -10,9 +10,12 @@ namespace HordeFlow.HR.Infrastructure.Configurations
         public override void Map(EntityTypeBuilder<User> b)
         {
             b.Property(e => e.Active).HasDefaultValue(true);
-            b.Property(e => e.Username).HasMaxLength(50).IsRequired();
+            b.Property(e => e.UserName).HasMaxLength(50).IsRequired();
             b.Property(e => e.Password).HasMaxLength(50).IsRequired();
-            b.HasIndex(e => e.Username).IsUnique();
+            b.Property(e => e.IsConfirmed).HasDefaultValue(false);
+            b.Property(e => e.IsSystemAdministrator).HasDefaultValue(false);
+            b.Property(e => e.RecoveryEmail).HasMaxLength(50);
+            b.Property(e => e.MobileNo).HasMaxLength(50);
         }
     }
 }
