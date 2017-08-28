@@ -67,6 +67,11 @@ namespace HordeFlow.HR.Repositories
             return await context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<T> Seek(int id)
+        {
+            return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<T> Get(Expression<Func<T, bool>> predicate)
         {
             return await context.Set<T>().FirstOrDefaultAsync(predicate);

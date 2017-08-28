@@ -62,13 +62,13 @@ namespace HordeFlow.HR.Controllers
                 return BadRequest();
             }
 
-            var persistedEntity = await repository.Get(id);
+            var persistedEntity = await repository.Seek(id);
             if(persistedEntity == null)
             {
                 return NotFound();   
             }
 
-            //repository.Update(entity);
+            repository.Update(entity);
             await repository.Commit();
             
             return new NoContentResult();

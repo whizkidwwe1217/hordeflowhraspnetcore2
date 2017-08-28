@@ -14,6 +14,7 @@ namespace HordeFlow.HR.Repositories.Interfaces
         Task<IResponseData<T>> List();
         Task<int> Count();
         Task<T> Get(int id);
+        Task<T> Seek(int id);
         Task<T> Get(Expression<Func<T, bool>> predicate);
         Task<T> Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<ResponseSearchData> Search(int? currentPage = 1, int? pageSize = 100, string filter = "", string sort = "", string fields = "");
