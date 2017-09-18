@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure;
 using HordeFlow.HR.Infrastructure.Security;
 using HordeFlow.HR.Repositories;
 using HordeFlow.HR.Repositories.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HordeFlow.HR
 {
@@ -49,7 +52,29 @@ namespace HordeFlow.HR
             // Make sure to always call this before authentication.
             services.AddCors();
             // Security
-            services.ConfigureAuthentication(Configuration);
+            //services.ConfigureAuthentication(Configuration);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["TokenAuthentication:Issuer"],
+                        ValidAudience = Configuration["TokenAuthentication:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenAuthentication:SecretKey"])),
+                        ClockSkew = TimeSpan.Zero,
+                        ValidateLifetime = true
+                    };
+                });
+            services.AddAuthorization(options => {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+            });
 
             // Register Repositories
             services.AddTransient<ICountryRepository, CountryRepository>();
@@ -74,8 +99,9 @@ namespace HordeFlow.HR
             }
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            app.UseAuthentication(Configuration);
-
+            //app.UseAuthentication(Configuration);
+            app.UseAuthentication();
+            // app.UseSimpleTokenProvider()
             app.UseMvc();
 
             // Runs migrations and seeds data that will ensure that the database exists or created.

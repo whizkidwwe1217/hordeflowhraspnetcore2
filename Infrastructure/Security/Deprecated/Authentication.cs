@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HordeFlow.HR.Infrastructure.Security
+namespace HordeFlow.HR.Infrastructure.Security.Deprecated
 {
     public static class Authentication
     {
@@ -41,12 +41,6 @@ namespace HordeFlow.HR.Infrastructure.Security
                 ClockSkew = TimeSpan.Zero
             };
 
-            // services.AddJwtBearerAuthentication(options => { 
-            //     options.TokenValidationParameters = 
-            //     AutomaticAuthenticate = true,
-            //     AutomaticChallenge = true,
-            //     TokenValidationParameters = tokenValidationParameters
-            //  }); 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,12 +56,6 @@ namespace HordeFlow.HR.Infrastructure.Security
             {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build(); 
             });
-
-            // services.AddJwtBearerAuthentication(options => {
-            //     options.TokenValidationParameters = tokenValidationParameters;
-            //     options.Audience = "ExampleAudience";
-            //     options.ClaimsIssuer = "ExampleIssuer";
-            // }); 
         }
         public static void UseAuthentication(this IApplicationBuilder app, IConfiguration configuration)
         {

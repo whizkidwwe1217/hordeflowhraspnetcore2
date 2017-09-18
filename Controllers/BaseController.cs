@@ -80,10 +80,22 @@ namespace HordeFlow.HR.Controllers
             if(entity == null)
                 return BadRequest();
 
-            await repository.Insert(entity);
-            await repository.Commit();
-            return CreatedAtAction("Get", new { id = entity.Id }, entity); // This will return the location of the inserted entity.
-            //return Ok(entity);
+            try 
+            {
+                await repository.Insert(entity);
+                await repository.Commit();
+                return CreatedAtAction("Get", new { id = entity.Id }, entity); // This will return the location of the inserted entity.
+            }
+            catch(DbUpdateException ex)
+            {
+                if(ex.InnerException != null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = ex.InnerException.Message, details = ex.InnerException });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = ex.Message, details = ex });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = ex.Message, details = ex });
+            }
         }
 
         [HttpDelete("{id}")]

@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HordeFlow.HR.Infrastructure.Security
+namespace HordeFlow.HR.Infrastructure.Security.Deprecated
 {
     /// <summary>
     /// Provides options for <see cref="TokenProviderMiddleware"/>.

@@ -4,7 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HordeFlow.HR.Infrastructure.Security
+namespace HordeFlow.HR.Infrastructure.Security.Deprecated
 {
     public class JwtDataFormat : ISecureDataFormat<AuthenticationTicket>
     {

@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 
-namespace HordeFlow.HR.Infrastructure.Security
+namespace HordeFlow.HR.Infrastructure.Security.Deprecated
 {
     public static class TokenProviderAppBuilderExtensions
     {
