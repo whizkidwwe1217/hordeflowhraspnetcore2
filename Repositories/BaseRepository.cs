@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using HordeFlow.HR.Infrastructure;
 using HordeFlow.HR.Utils;
+using System.Text;
+using System.IO;
 
 namespace HordeFlow.HR.Repositories
 {
@@ -124,9 +126,17 @@ namespace HordeFlow.HR.Repositories
                     response.data = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).ToListAsync();
                 else
                 {
-                    var projected = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).Select((T x) =>
-                      new JObject(JsonConvert.SerializeObject(x, Formatting.Indented,
-                      new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
+                    // This is the Serializer approach that uses Reflection, accurate but very slow. 
+                    // Takes about 300ms when making an http request
+                    // var projected = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).Select((T x) =>
+                    //    JObject.Parse(JsonConvert.SerializeObject(x, Formatting.Indented,
+                    //     new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
+
+                    // This approach by manually loading the correct json properties takes only 30ms.
+                    var projected = await data
+                        .Skip(((int)currentPage - 1) * (int)pageSize)
+                        .Take((int)pageSize)
+                        .Select((T x) => Serialize(x, fields)).ToListAsync();
 
                     response = new ResponseSearchData
                     {
@@ -148,9 +158,13 @@ namespace HordeFlow.HR.Repositories
                     response.data = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).ToListAsync();
                 else
                 {
+                    // This is the Serializer approach that uses Reflection, accurate but very slow. 
+                    // Takes about 300ms when making an http request
+                    // var projected = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).Select((T x) =>
+                    //     JObject.Parse(JsonConvert.SerializeObject(x, Formatting.Indented,
+                    //     new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
                     var projected = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).Select((T x) =>
-                        new JObject(JsonConvert.SerializeObject(x, Formatting.Indented,
-                        new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
+                        Serialize(x, fields)).ToListAsync();
                     response = new ResponseSearchData
                     {
                         total = response.total,
@@ -163,6 +177,59 @@ namespace HordeFlow.HR.Repositories
             }
 
             return response;
+        }
+
+        private JObject Serialize(object data, string fields)
+        {
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                var serializer = new JsonSerializer();
+                serializer.Serialize(writer, data);
+            }
+
+            var field = fields.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            string[] fieldsArray = field.Select(f => ToCamelCase(f.Trim())).ToArray();
+            var json = JObject.Parse(sb.ToString());
+            var newJson = new JObject();
+
+            foreach (var f in fieldsArray)
+            {
+                var value = json.GetValue(f);
+                newJson.Add(ToLowerCamelCase(f), value);
+            }
+            return newJson;
+        }
+
+        public string ToLowerCamelCase(string input)
+        {
+            string[] words = input.Split(' ');
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in words)
+            {
+                string firstLetter = s.Substring(0, 1);
+                string rest = s.Substring(1, s.Length - 1);
+                sb.Append(firstLetter.ToLower() + rest);
+                sb.Append(' ');
+
+            }
+            return sb.ToString().Substring(0, sb.ToString().Length - 1);
+        }
+
+        public string ToCamelCase(string input)
+        {
+            string[] words = input.Split(' ');
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in words)
+            {
+                string firstLetter = s.Substring(0, 1);
+                string rest = s.Substring(1, s.Length - 1);
+                sb.Append(firstLetter.ToUpper() + rest);
+                sb.Append(' ');
+
+            }
+            return sb.ToString().Substring(0, sb.ToString().Length - 1);
         }
 
         public IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
