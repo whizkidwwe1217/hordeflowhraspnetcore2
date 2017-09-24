@@ -46,7 +46,7 @@ namespace HordeFlow.HR.Repositories
             {
                 await context.SaveChangesAsync();
             }
-            catch(DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException ex)
             {
                 throw new Exception("This records has been changed by another user. Error details: " + ex.Message);
             }
@@ -124,15 +124,17 @@ namespace HordeFlow.HR.Repositories
                     response.data = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).ToListAsync();
                 else
                 {
-                    var projected = await data.Skip(((int)currentPage - 1) * (int) pageSize).Take((int) pageSize).Select((T x) =>
-                        JObject.Parse(JsonConvert.SerializeObject(x, Formatting.Indented, 
-                        new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
-                    response = new ResponseSearchData {
+                    var projected = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).Select((T x) =>
+                      new JObject(JsonConvert.SerializeObject(x, Formatting.Indented,
+                      new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
+
+                    response = new ResponseSearchData
+                    {
                         total = response.total,
                         pageSize = response.pageSize,
                         pageCount = response.pageCount,
                         currentPage = currentPage,
-                        data = projected    
+                        data = projected
                     };
                 }
             }
@@ -142,19 +144,20 @@ namespace HordeFlow.HR.Repositories
                 var data = query.AsNoTracking().Where(predicate);
                 response.total = await data.CountAsync();
                 response.pageCount = (int)Math.Ceiling((double)response.total / (int)pageSize);
-                if(string.IsNullOrEmpty(fields))
+                if (string.IsNullOrEmpty(fields))
                     response.data = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).ToListAsync();
                 else
                 {
                     var projected = await data.Skip(((int)currentPage - 1) * (int)pageSize).Take((int)pageSize).Select((T x) =>
-                        JObject.Parse(JsonConvert.SerializeObject(x, Formatting.Indented, 
+                        new JObject(JsonConvert.SerializeObject(x, Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new FieldSerializer(fields) }))).ToListAsync();
-                    response = new ResponseSearchData {
+                    response = new ResponseSearchData
+                    {
                         total = response.total,
                         pageSize = response.pageSize,
                         pageCount = response.pageCount,
                         currentPage = currentPage,
-                        data = projected    
+                        data = projected
                     };
                 }
             }

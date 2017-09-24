@@ -67,10 +67,23 @@ namespace HordeFlow.HR.Controllers
             {
                 return NotFound();   
             }
-
-            repository.Update(entity);
-            await repository.Commit();
             
+            try 
+            {
+                repository.Update(entity);
+                await repository.Commit();
+            }
+            catch(DbUpdateException ex)
+            {
+                if(ex.InnerException != null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = ex.InnerException.Message, details = ex.InnerException });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = ex.Message, details = ex });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = ex.Message, details = ex });
+            }
+
             return new NoContentResult();
         }
 
