@@ -46,7 +46,7 @@ namespace HordeFlow.HR.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public virtual async Task<IActionResult> Get(int id)
         {
             var entity = await repository.Get(id);
             if (entity != null)

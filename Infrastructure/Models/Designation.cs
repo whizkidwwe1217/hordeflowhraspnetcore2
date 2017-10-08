@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace HordeFlow.HR.Infrastructure.Models
 {
@@ -7,6 +8,7 @@ namespace HordeFlow.HR.Infrastructure.Models
     {
         public string Name { get; set; }
         public bool? Active { get; set; }
+        [JsonIgnore] 
         public ICollection<Employee> Employees { get; set; }
     }
 }

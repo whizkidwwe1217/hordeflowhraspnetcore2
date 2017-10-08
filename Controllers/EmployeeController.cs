@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure.Models;
 using HordeFlow.HR.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,15 @@ namespace HordeFlow.HR.Controllers
             : base(repository)
         {
             
+        }
+
+        [HttpGet("{id}")]
+        public override async Task<IActionResult> Get(int id)
+        {
+            var entity = await repository.Get(p => p.Id == id, p => p.Designation);
+            if (entity != null)
+                return Ok(entity);
+            return NotFound(entity);
         }
     }
 }

@@ -12,6 +12,8 @@ dotnet ef database update
 dotnet ef database drop
 
 ## Articles
+### Dynnamic Filtering
+https://www.codeproject.com/Articles/108653/JavaScript-Filtering-with-JSON-and-Filter-Manageme
 
 ### Security
 https://dev.to/samueleresca/developing-token-authentication-using-aspnet-core
