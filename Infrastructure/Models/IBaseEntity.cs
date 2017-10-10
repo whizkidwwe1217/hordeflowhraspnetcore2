@@ -10,6 +10,7 @@ namespace HordeFlow.HR.Infrastructure.Models
 
         [Timestamp]
         byte[] RowVersion { get; set; }
+        bool? IsDeleted { get; set; }
         DateTime? CreatedDate { get; set; }
         DateTime? ModifiedDate { get; set;}
         int? UserModifiedId { get; set; }

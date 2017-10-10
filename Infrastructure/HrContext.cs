@@ -6,10 +6,12 @@ namespace HordeFlow.HR.Infrastructure
 {
     public class HrContext: DbContext
     {
+        private int companyId;
+
         public HrContext(DbContextOptions<HrContext> options)
             : base(options)
         {
-            
+            this.companyId = 1;
         }
 
         public DbSet<Country> Countries { get; set; }
@@ -27,6 +29,15 @@ namespace HordeFlow.HR.Infrastructure
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.AddEntityConfigurationsFromAssembly(GetType().Assembly);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.AddEntityConfigurationsFromAssembly(GetType().Assembly);
+            //modelBuilder.AddEntityCompanyFilter(GetType().Assembly);
+            // Soft Delete & Multi-tenacy (Multi-company)
+            modelBuilder.Entity<Employee>()
+                .HasQueryFilter(e => e.CompanyId == 1);
+            
+            base.OnModelCreating(modelBuilder);
+        }
     }
 } 

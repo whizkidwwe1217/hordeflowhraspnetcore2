@@ -12,7 +12,7 @@ namespace HordeFlow.HR.Infrastructure
     {
         public static async Task SeedAsync(this IApplicationBuilder applicationBuilder, HrContext context)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             var company = new Company()
@@ -21,7 +21,8 @@ namespace HordeFlow.HR.Infrastructure
                 Code = "Acme",
                 Name = "Acme"
             };
-            await context.Companies.AddAsync(company);
+            if (context.Companies.Where(p => p.Code == "Acme").FirstOrDefault() == null)
+                await context.Companies.AddAsync(company);
 
             var role = new Role()
             {
@@ -30,24 +31,26 @@ namespace HordeFlow.HR.Infrastructure
                 Description = "Administrator",
                 IsSystemAdministrator = true
             };
-
-            await context.Roles.AddAsync(role);
+            if (context.Roles.Where(p => p.Name == "Admin").FirstOrDefault() == null)
+                await context.Roles.AddAsync(role);
 
             var permission = new Permission()
             {
                 Name = "admin-create",
                 Description = "Allows creating new users."
             };
-
-            await context.Permissions.AddAsync(permission);
-
-            var rolePermission = new RolePermission()
+            if (context.Permissions.Where(p => p.Name == "admin-create").FirstOrDefault() == null)
             {
-                Role = role,
-                Permission = permission
-            };
+                await context.Permissions.AddAsync(permission);
 
-            await context.RolePermissions.AddAsync(rolePermission);
+                var rolePermission = new RolePermission()
+                {
+                    Role = role,
+                    Permission = permission
+                };
+
+                await context.RolePermissions.AddAsync(rolePermission);
+            }
 
             var user = new User("wendell")
             {
@@ -55,16 +58,18 @@ namespace HordeFlow.HR.Infrastructure
                 Password = "1234"
             };
 
-            await context.Users.AddAsync(user);
-
-            var userRole = new UserRole()
+            if (context.Users.Where(p => p.UserName == "wendell").FirstOrDefault() == null)
             {
-                Role = role,
-                User = user
-            };
+                await context.Users.AddAsync(user);
 
-            await context.UserRoles.AddAsync(userRole);
-            
+                var userRole = new UserRole()
+                {
+                    Role = role,
+                    User = user
+                };
+
+                await context.UserRoles.AddAsync(userRole);
+            }
             await context.SaveChangesAsync();
         }
     }
