@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace HordeFlow.HR
 {
@@ -88,6 +89,12 @@ namespace HordeFlow.HR
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IEmployeeAddressRepository, EmployeeAddressRepository>();
             services.AddTransient<ICompanyAddressRepository, CompanyAddressRepository>();
+
+            // API Documentation
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "HordeFlow HR API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,6 +109,14 @@ namespace HordeFlow.HR
             //app.UseAuthentication(Configuration);
             app.UseAuthentication();
             // app.UseSimpleTokenProvider()
+
+            // API Documentation
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.ShowRequestHeaders();
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HordeFlow HR API");
+            });
+
             app.UseMvc();
 
             // Runs migrations and seeds data that will ensure that the database exists or created.
