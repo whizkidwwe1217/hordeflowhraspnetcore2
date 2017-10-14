@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure;
+using HordeFlow.HR.Infrastructure.Models;
 using HordeFlow.HR.Infrastructure.Security;
+using HordeFlow.HR.Infrastructure.Services.Email;
 using HordeFlow.HR.Repositories;
 using HordeFlow.HR.Repositories.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -54,6 +56,31 @@ namespace HordeFlow.HR
             services.AddCors();
             // Security
             //services.ConfigureAuthentication(Configuration);
+            services.AddIdentity<User, Role>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 2;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // Signin settings
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<HrContext>()
+            .AddDefaultTokenProviders();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -73,7 +100,8 @@ namespace HordeFlow.HR
                         ValidateLifetime = true
                     };
                 });
-            services.AddAuthorization(options => {
+            services.AddAuthorization(options =>
+            {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
             });
 
@@ -90,6 +118,7 @@ namespace HordeFlow.HR
             services.AddTransient<IEmployeeAddressRepository, EmployeeAddressRepository>();
             services.AddTransient<ICompanyAddressRepository, CompanyAddressRepository>();
 
+            services.AddTransient<IEmailSender, EmailSender>();
             // API Documentation
             services.AddSwaggerGen(c =>
             {
@@ -98,7 +127,7 @@ namespace HordeFlow.HR
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -112,7 +141,8 @@ namespace HordeFlow.HR
 
             // API Documentation
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.ShowRequestHeaders();
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HordeFlow HR API");
             });
@@ -123,8 +153,8 @@ namespace HordeFlow.HR
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<HrContext>();
-                await context.Database.MigrateAsync();
-                await app.SeedAsync(context);
+                context.Database.Migrate();
+                app.Seed(context);
             }
         }
     }

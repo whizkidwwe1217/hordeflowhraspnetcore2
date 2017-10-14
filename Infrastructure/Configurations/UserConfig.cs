@@ -11,7 +11,7 @@ namespace HordeFlow.HR.Infrastructure.Configurations
         {
             b.Property(e => e.Active).HasDefaultValue(true);
             b.Property(e => e.UserName).HasMaxLength(50).IsRequired();
-            b.Property(e => e.Password).HasMaxLength(50).IsRequired();
+            b.Property(e => e.Password).IsRequired();
             b.Property(e => e.IsConfirmed).HasDefaultValue(false);
             b.Property(e => e.IsSystemAdministrator).HasDefaultValue(false);
             b.Property(e => e.RecoveryEmail).HasMaxLength(50);

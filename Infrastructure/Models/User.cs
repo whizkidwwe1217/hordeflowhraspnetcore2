@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace HordeFlow.HR.Infrastructure.Models
 {
-    public class User : CompanyEntity
+    public class User : IdentityUserBase
     {
         public User() {}
         public User(string userName)
@@ -56,9 +56,10 @@ namespace HordeFlow.HR.Infrastructure.Models
             }
             return found;
         }
-        public string UserName { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
-        public string Email { get; set; }
+        [DataType(DataType.Password)]        
+        public string ConfirmPassword { get; set; }
         public string MobileNo { get; set; }
         public string RecoveryEmail { get; set; }
         public bool? IsConfirmed { get; set; }

@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using HordeFlow.HR.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HordeFlow.HR.Infrastructure.Models
 {
-    public abstract class CompanyEntity : ICompanyEntity
+    public abstract class IdentityUserBase : IdentityUser<int>, ICompanyEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Timestamp]
         public byte[] RowVersion { get; set; }
         public bool? IsDeleted { get; set; }

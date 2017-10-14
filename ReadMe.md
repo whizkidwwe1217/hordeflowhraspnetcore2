@@ -19,6 +19,9 @@ https://www.codeproject.com/Articles/108653/JavaScript-Filtering-with-JSON-and-F
 https://dev.to/samueleresca/developing-token-authentication-using-aspnet-core
 https://logcorner.com/token-based-authentication-using-asp-net-web-api-core/
 
+### Authorization
+https://tahirnaushad.com/2017/10/10/asp-net-core-2-0-identity/
+
 ### RBAC
 https://www.codeproject.com/Articles/1079552/Custom-Roles-Based-Access-Control-RBAC-in-ASP-NE
 
