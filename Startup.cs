@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure;
 using HordeFlow.HR.Infrastructure.Models;
 using HordeFlow.HR.Infrastructure.Security;
+using HordeFlow.HR.Infrastructure.Security.Authentication;
 using HordeFlow.HR.Infrastructure.Services.Email;
 using HordeFlow.HR.Repositories;
 using HordeFlow.HR.Repositories.Implementation;
@@ -51,10 +52,11 @@ namespace HordeFlow.HR
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
 
+            #region Security
             // Cross-Origin Resource Sharing
             // Make sure to always call this before authentication.
             services.AddCors();
-            // Security
+
             //services.ConfigureAuthentication(Configuration);
             services.AddIdentity<User, Role>(options =>
             {
@@ -105,6 +107,9 @@ namespace HordeFlow.HR
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
             });
 
+            #endregion
+
+            #region Entity Framework Data Repositories
             // Register Repositories
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<ICompanyRepository, CompanyRepository>();
@@ -117,13 +122,17 @@ namespace HordeFlow.HR
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IEmployeeAddressRepository, EmployeeAddressRepository>();
             services.AddTransient<ICompanyAddressRepository, CompanyAddressRepository>();
+            #endregion
 
             services.AddTransient<IEmailSender, EmailSender>();
+            
+            #region Documentation
             // API Documentation
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "HordeFlow HR API", Version = "v1" });
             });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -134,11 +143,12 @@ namespace HordeFlow.HR
                 app.UseDeveloperExceptionPage();
             }
 
+            #region Security
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            //app.UseAuthentication(Configuration);
             app.UseAuthentication();
-            // app.UseSimpleTokenProvider()
+            #endregion
 
+            #region Documentation
             // API Documentation
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -146,9 +156,11 @@ namespace HordeFlow.HR
                 c.ShowRequestHeaders();
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HordeFlow HR API");
             });
+            #endregion
 
             app.UseMvc();
 
+            #region Database Seed
             // Runs migrations and seeds data that will ensure that the database exists or created.
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -156,6 +168,7 @@ namespace HordeFlow.HR
                 context.Database.Migrate();
                 app.Seed(context);
             }
+            #endregion
         }
     }
 }

@@ -47,20 +47,17 @@ namespace HordeFlow.HR.Controllers
             if (model == null)
                 return BadRequest();
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var user = new User() { UserName = model.UserName, PasswordHash = model.Password };
                 var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-                if(result.Succeeded)
+                if (result.Succeeded)
+                {
+                    var user = await userManager.FindByNameAsync(model.UserName);
                     return Ok(user);
-                // var user = await context.Users
-                //     .FirstOrDefaultAsync(e => e.UserName == model.UserName && e.PasswordHash == model.Password);
-                // if (user != null)
-                // {
-                //     return Ok(user);
-                // }
+                }
             }
-            else {
+            else
+            {
                 ModelState.AddModelError(string.Empty, "Unauthorized login.");
                 return BadRequest();
             }
@@ -70,13 +67,21 @@ namespace HordeFlow.HR.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
-        public IActionResult GenerateToken([FromBody] LoginViewModel model)
+        public async Task<IActionResult> GenerateToken([FromBody] LoginViewModel model)
         {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, "whizkidwwe1217@live.com"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
+
+            var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+            if (!result.Succeeded)
+            {
+                return Unauthorized();
+            }
+            
+            var user = await userManager.FindByNameAsync(model.UserName);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenAuthentication:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -88,11 +93,11 @@ namespace HordeFlow.HR.Controllers
               expires: expiryDate,
               signingCredentials: creds);
 
-            return Ok(new 
+            return Ok(new
             {
-                access_token = new JwtSecurityTokenHandler().WriteToken(token), 
+                access_token = new JwtSecurityTokenHandler().WriteToken(token),
                 expirationBuffer = expirationBuffer,
-                expiryDate = expiryDate 
+                expiryDate = expiryDate
             });
         }
 
@@ -118,7 +123,7 @@ namespace HordeFlow.HR.Controllers
                         UserName = model.UserName
                     };
                     var result = await userManager.CreateAsync(user, model.Password);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         var confirmationCode = await userManager.GenerateEmailConfirmationTokenAsync(user);
                         var callbackUrl = Url.Action(
@@ -153,13 +158,13 @@ namespace HordeFlow.HR.Controllers
 
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            if(userId == null || code == null)
+            if (userId == null || code == null)
                 return BadRequest();
             var user = await userManager.FindByIdAsync(userId);
-            if(user == null)
+            if (user == null)
                 return NotFound();
             var result = await userManager.ConfirmEmailAsync(user, code);
-            if(result.Succeeded)
+            if (result.Succeeded)
                 return Ok();
             return BadRequest();
         }

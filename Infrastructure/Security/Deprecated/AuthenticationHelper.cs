@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HordeFlow.HR.Infrastructure.Security.Deprecated
 {
-    public static class Authentication
+    public static class AuthenticationHelper
     {
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
