@@ -25,10 +25,8 @@ namespace HordeFlow.HR.Infrastructure
         public DbSet<Address> States { get; set; }
         public DbSet<CompanyAddress> CompanyAddresses { get; set; }
         public DbSet<EmployeeAddress> EmployeeAddresses { get; set; }
-        // public DbSet<User> Users { get; set; }
-        // public DbSet<Role> Roles { get; set; }
+
         public DbSet<Permission> Permissions { get; set; }
-        // public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,8 +38,10 @@ namespace HordeFlow.HR.Infrastructure
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().ToTable("User").HasKey(u => u.Id);
-            modelBuilder.Entity<Role>().ToTable("Role").HasKey(r => r.Id);
+            modelBuilder.Entity<User>().ToTable("Users").HasKey(u => u.Id);
+            modelBuilder.Entity<Role>().ToTable("Roles").HasKey(r => r.Id);
+            modelBuilder.Entity<RoleClaims>().ToTable("RoleClaims").HasKey(rc => rc.Id);
+            modelBuilder.Entity<UserRole>().ToTable("UserRoles");
         }
     }
 }

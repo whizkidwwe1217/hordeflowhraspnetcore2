@@ -50,7 +50,10 @@ namespace HordeFlow.HR
             services.AddMvc();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
+            var engineConfig = Configuration.GetSection("ServerSettings");
+            if(engineConfig["Engine"] == "SqlServer")
+                services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
+            else if(engineConfig["Engine"] == "Sqlite") services.AddDbContext<HrContext>(options => options.UseSqlite("Data Source=hordeflowhr.db"));
 
             #region Security
             // Cross-Origin Resource Sharing
@@ -165,8 +168,11 @@ namespace HordeFlow.HR
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<HrContext>();
-                context.Database.Migrate();
-                app.Seed(context);
+                if(!context.AllMigrationsApplied())
+                {
+                    context.Database.Migrate();
+                    context.EnsureSeeded();
+                }
             }
             #endregion
         }

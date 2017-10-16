@@ -9,4 +9,4 @@ namespace HordeFlow.HR.Infrastructure.Models
         int? CompanyId { get; set; }
         Company Company { get; set; }
     }
-} 
+}

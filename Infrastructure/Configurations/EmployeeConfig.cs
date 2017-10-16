@@ -19,6 +19,7 @@ namespace HordeFlow.HR.Infrastructure.Configurations
             b.Property(e => e.GSIS).HasMaxLength(50);
             b.Property(e => e.PHIC).HasMaxLength(50);
             b.Property(e => e.TIN).HasMaxLength(50);
+            b.Property(e => e.Title).HasMaxLength(20);
             b.Property(e => e.Citizenship).HasMaxLength(100);
             b.Property(e => e.Religion).HasMaxLength(100);
             b.Property(e => e.Email).HasMaxLength(50);

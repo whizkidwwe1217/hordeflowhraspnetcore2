@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HordeFlow.HR.Infrastructure.Configurations
 {
-    public class TeamConfig : EntityMappingConfiguration<Team>
+    public class RoleClaimsConfig : EntityMappingConfiguration<RoleClaims>
     {
-        public override void Map(EntityTypeBuilder<Team> b)
+        public override void Map(EntityTypeBuilder<RoleClaims> b)
         {
             b.Property(e => e.Active).HasDefaultValue(true);
-            b.Property(e => e.Name).HasMaxLength(50).IsRequired();
-            b.Property(e => e.Description).HasMaxLength(50);
-            b.HasIndex(e => new { e.CompanyId, e.Name }).IsUnique();
+            b.Property(e => e.ClaimType).HasMaxLength(50);
+            b.Property(e => e.ClaimValue).HasMaxLength(300);
         }
     }
 }
