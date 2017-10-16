@@ -49,7 +49,7 @@ namespace HordeFlow.HR
         {
             services.AddMvc();
 
-            var connection = Configuration.GetConnectionString("DefaultConnection");
+            var connection = Configuration.GetConnectionString("AppHarbor");
             var engineConfig = Configuration.GetSection("ServerSettings");
             if(engineConfig["Engine"] == "SqlServer")
                 services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));

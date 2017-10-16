@@ -40,7 +40,6 @@ namespace HordeFlow.HR.Infrastructure
 
             modelBuilder.Entity<User>().ToTable("Users").HasKey(u => u.Id);
             modelBuilder.Entity<Role>().ToTable("Roles").HasKey(r => r.Id);
-            modelBuilder.Entity<RoleClaims>().ToTable("RoleClaims").HasKey(rc => rc.Id);
             modelBuilder.Entity<UserRole>().ToTable("UserRoles");
         }
     }
