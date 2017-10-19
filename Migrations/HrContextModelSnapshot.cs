@@ -18,13 +18,14 @@ namespace HordeFlow.HR.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Address", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressLine1")
                         .IsRequired()
@@ -39,6 +40,10 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("City")
                         .HasMaxLength(50);
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
                     b.Property<DateTime?>("CreatedDate");
 
                     b.Property<bool?>("IsDeleted");
@@ -49,10 +54,6 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<string>("PostalCode")
                         .HasMaxLength(20);
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("StateId")
                         .IsRequired();
@@ -71,7 +72,8 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Company", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("Active")
                         .ValueGeneratedOnAdd()
@@ -82,6 +84,10 @@ namespace HordeFlow.HR.Migrations
                         .HasMaxLength(50);
 
                     b.Property<int?>("CompanyAddressId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -94,10 +100,6 @@ namespace HordeFlow.HR.Migrations
                         .HasMaxLength(50);
 
                     b.Property<int?>("ParentCompanyId");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("UserCreatedId");
 
@@ -119,18 +121,19 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<int>("AddressId");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
                     b.Property<DateTime?>("CreatedDate");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("IsDeleted");
 
                     b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("UserCreatedId");
 
@@ -148,11 +151,16 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Country", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -163,10 +171,6 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("UserCreatedId");
 
@@ -186,13 +190,18 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Department", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("Active")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
                     b.Property<int?>("CompanyId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -204,10 +213,6 @@ namespace HordeFlow.HR.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<int?>("UserCreatedId");
 
                     b.Property<int?>("UserModifiedId");
@@ -215,8 +220,7 @@ namespace HordeFlow.HR.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId", "Name")
-                        .IsUnique()
-                        .HasFilter("[CompanyId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Departments");
                 });
@@ -224,13 +228,18 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Designation", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("Active")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
                     b.Property<int?>("CompanyId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -242,10 +251,6 @@ namespace HordeFlow.HR.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<int?>("UserCreatedId");
 
                     b.Property<int?>("UserModifiedId");
@@ -253,8 +258,7 @@ namespace HordeFlow.HR.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId", "Name")
-                        .IsUnique()
-                        .HasFilter("[CompanyId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Designations");
                 });
@@ -262,7 +266,8 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("Active")
                         .ValueGeneratedOnAdd()
@@ -282,6 +287,10 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<int?>("CompanyId")
                         .IsRequired();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -319,10 +328,6 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<string>("Religion")
                         .HasMaxLength(100);
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("SSS")
                         .HasMaxLength(50);
@@ -366,18 +371,19 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<int>("AddressId");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
                     b.Property<DateTime?>("CreatedDate");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("IsDeleted");
 
                     b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("UserCreatedId");
 
@@ -395,13 +401,18 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Permission", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("Active")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
                     b.Property<int?>("CompanyId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -415,10 +426,6 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("UserCreatedId");
 
@@ -466,10 +473,6 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<int?>("UserCreatedId");
 
                     b.Property<int?>("UserModifiedId");
@@ -480,8 +483,7 @@ namespace HordeFlow.HR.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("Roles");
                 });
@@ -492,7 +494,7 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<int>("PermissionId");
 
-                    b.Property<byte[]>("RowVersion")
+                    b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
@@ -506,11 +508,16 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.State", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int>("CountryId");
 
@@ -523,10 +530,6 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int?>("UserCreatedId");
 
@@ -542,13 +545,18 @@ namespace HordeFlow.HR.Migrations
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Team", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("Active")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
                     b.Property<int?>("CompanyId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<DateTime?>("CreatedDate");
 
@@ -563,10 +571,6 @@ namespace HordeFlow.HR.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<int?>("UserCreatedId");
 
                     b.Property<int?>("UserModifiedId");
@@ -574,8 +578,7 @@ namespace HordeFlow.HR.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId", "Name")
-                        .IsUnique()
-                        .HasFilter("[CompanyId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Teams");
                 });
@@ -647,10 +650,6 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("RecoveryEmail")
                         .HasMaxLength(50);
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
                     b.Property<string>("SecurityStamp")
                         .HasMaxLength(300);
 
@@ -673,8 +672,7 @@ namespace HordeFlow.HR.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("Users");
                 });
@@ -685,7 +683,7 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<int>("RoleId");
 
-                    b.Property<byte[]>("RowVersion")
+                    b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 

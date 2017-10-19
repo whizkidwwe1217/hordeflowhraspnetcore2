@@ -11,6 +11,6 @@ namespace HordeFlow.HR.Infrastructure.Models
         public Permission Permission { get; set; }
         
         [Timestamp]
-        public byte[] RowVersion { get; set; }
+        public string ConcurrencyStamp { get; set; }
     }
 }

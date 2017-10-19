@@ -14,16 +14,16 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Code = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     CompanyAddressId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ParentCompanyId = table.Column<int>(type: "int", nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -43,13 +43,13 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Code = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -63,14 +63,14 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -90,14 +90,14 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -117,15 +117,15 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Description = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -145,18 +145,17 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Description = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsSystemAdministrator = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -176,15 +175,15 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Description = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -204,35 +203,34 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    ConfirmPassword = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    ConfirmPassword = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsSystemAdministrator = table.Column<bool>(type: "bit", nullable: true, defaultValue: false),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    MobileNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
+                    MobileNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    RecoveryEmail = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    RecoveryEmail = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    SecurityStamp = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
+                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -250,14 +248,14 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Code = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
                     CountryId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -277,9 +275,9 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(type: "longtext", nullable: true),
+                    ClaimValue = table.Column<string>(type: "longtext", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -299,7 +297,7 @@ namespace HordeFlow.HR.Migrations
                 {
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     PermissionId = table.Column<int>(type: "int", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -323,32 +321,32 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<bool>(type: "bit", nullable: true, defaultValue: true),
-                    Avatar = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    Birthdate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Citizenship = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Avatar = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    Birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Citizenship = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    Code = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
                     DesignationId = table.Column<int>(type: "int", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    GSIS = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    GSIS = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     MaritalStatus = table.Column<int>(type: "int", nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PHIC = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Religion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                    SSS = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    TIN = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    MiddleName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    PHIC = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    Religion = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    SSS = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    TIN = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
                     TeamId = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Title = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -386,9 +384,9 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(type: "longtext", nullable: true),
+                    ClaimValue = table.Column<string>(type: "longtext", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -406,9 +404,9 @@ namespace HordeFlow.HR.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LoginProvider = table.Column<string>(type: "varchar(127)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(127)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "longtext", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -451,9 +449,9 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LoginProvider = table.Column<string>(type: "varchar(127)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(127)", nullable: false),
+                    Value = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -472,7 +470,7 @@ namespace HordeFlow.HR.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -496,17 +494,17 @@ namespace HordeFlow.HR.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AddressLine1 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    AddressLine2 = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    AddressType = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
-                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddressLine1 = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
+                    AddressLine2 = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    AddressType = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true),
+                    City = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
                     IsPrimary = table.Column<bool>(type: "bit", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    PostalCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
                     StateId = table.Column<int>(type: "int", nullable: false),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
@@ -528,12 +526,12 @@ namespace HordeFlow.HR.Migrations
                 {
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -561,12 +559,12 @@ namespace HordeFlow.HR.Migrations
                 {
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: true),
-                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     UserCreatedId = table.Column<int>(type: "int", nullable: true),
                     UserModifiedId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -645,15 +643,13 @@ namespace HordeFlow.HR.Migrations
                 name: "IX_Departments_CompanyId_Name",
                 table: "Departments",
                 columns: new[] { "CompanyId", "Name" },
-                unique: true,
-                filter: "[CompanyId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Designations_CompanyId_Name",
                 table: "Designations",
                 columns: new[] { "CompanyId", "Name" },
-                unique: true,
-                filter: "[CompanyId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeAddresses_AddressId",
@@ -716,8 +712,7 @@ namespace HordeFlow.HR.Migrations
                 name: "RoleNameIndex",
                 table: "Roles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_State_CountryId",
@@ -728,8 +723,7 @@ namespace HordeFlow.HR.Migrations
                 name: "IX_Teams_CompanyId_Name",
                 table: "Teams",
                 columns: new[] { "CompanyId", "Name" },
-                unique: true,
-                filter: "[CompanyId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
@@ -750,8 +744,7 @@ namespace HordeFlow.HR.Migrations
                 name: "UserNameIndex",
                 table: "Users",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

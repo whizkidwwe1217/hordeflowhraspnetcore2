@@ -9,7 +9,7 @@ namespace HordeFlow.HR.Infrastructure.Models
         int Id { get; set; } 
 
         [Timestamp]
-        byte[] RowVersion { get; set; }
+        string ConcurrencyStamp { get; set; }
         bool? IsDeleted { get; set; }
         DateTime? CreatedDate { get; set; }
         DateTime? ModifiedDate { get; set;}

@@ -16,11 +16,13 @@ namespace HordeFlow.HR.Infrastructure
             .AddJsonFile("appsettings.json")
             .Build();
             var builder = new DbContextOptionsBuilder<HrContext>();
-            var engineConfig = configuration.GetSection("ServerSettings");
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            if(engineConfig["Engine"] == "SqlServer")
+            var serverSettings = configuration.GetSection("ServerSettings");
+            var connectionString = configuration.GetConnectionString(serverSettings["ConnectionStringKey"] == null ? "DefaultConnection" : serverSettings["ConnectionStringKey"]);
+            if(serverSettings["Engine"] == "SqlServer")
                 builder.UseSqlServer(connectionString);
-            else if(engineConfig["Engine"] == "Sqlite")
+            else if(serverSettings["Engine"] == "MySQL")
+                builder.UseMySql(connectionString);
+            else if(serverSettings["Engine"] == "Sqlite")
                 builder.UseSqlite("Data Source=hordeflowhr.db");
             return new HrContext(builder.Options);
         }

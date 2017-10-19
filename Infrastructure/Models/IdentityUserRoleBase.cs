@@ -13,7 +13,7 @@ namespace HordeFlow.HR.Infrastructure.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Timestamp]
-        public byte[] RowVersion { get; set; }
+        public string ConcurrencyStamp { get; set; }
         public bool? IsDeleted { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

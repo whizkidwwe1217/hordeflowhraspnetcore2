@@ -49,11 +49,13 @@ namespace HordeFlow.HR
         {
             services.AddMvc();
 
-            var connection = Configuration.GetConnectionString("DefaultConnection");
-            var engineConfig = Configuration.GetSection("ServerSettings");
-            if(engineConfig["Engine"] == "SqlServer")
-                services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
-            else if(engineConfig["Engine"] == "Sqlite") services.AddDbContext<HrContext>(options => options.UseSqlite("Data Source=hordeflowhr.db"));
+            var serverSettings = Configuration.GetSection("ServerSettings");
+            var connectionString = Configuration.GetConnectionString(serverSettings["ConnectionStringKey"] == null ? "DefaultConnection" : serverSettings["ConnectionStringKey"]);
+            if(serverSettings["Engine"] == "SqlServer")
+                services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connectionString));
+            else if(serverSettings["Engine"] == "MySQL")
+                services.AddDbContext<HrContext>(options => options.UseMySql(connectionString));
+            else if(serverSettings["Engine"] == "Sqlite") services.AddDbContext<HrContext>(options => options.UseSqlite("Data Source=hordeflowhr.db"));
 
             #region Security
             // Cross-Origin Resource Sharing

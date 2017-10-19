@@ -45,7 +45,11 @@ namespace HordeFlow.HR.Infrastructure
             // UserManager<User> userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             // RoleManager<Role> roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
             var seedsDir = "Infrastructure/Seeds" + Path.DirectorySeparatorChar;
-            
+            if(!AllMigrationsApplied())
+                await context.Database.MigrateAsync();
+
+            //await context.Database.EnsureCreatedAsync();
+
             if(!context.Companies.Any())
             {
                 var companies = JsonConvert.DeserializeObject<List<Company>>(File.ReadAllText(seedsDir + "companies.json"));

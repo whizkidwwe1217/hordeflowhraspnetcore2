@@ -10,6 +10,6 @@ namespace HordeFlow.HR.Infrastructure.Models
         public User User { get; set; }
         public Role Role { get; set; }
         [Timestamp]
-        public byte[] RowVersion { get; set; }
+        public string ConcurrencyStamp { get; set; }
     }
 }

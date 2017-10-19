@@ -42,5 +42,10 @@ namespace HordeFlow.HR.Infrastructure
             modelBuilder.Entity<Role>().ToTable("Roles").HasKey(r => r.Id);
             modelBuilder.Entity<UserRole>().ToTable("UserRoles");
         }
+
+        // protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        // {
+        //     builder.UseMySql("server=localhost;userid=root;pwd=masterkey;port=3306;database=hordeflowhr;");
+        // }
     }
 }

@@ -9,8 +9,6 @@ namespace HordeFlow.HR.Infrastructure.Models
 {
     public abstract class IdentityUserBase : IdentityUser<int>, ICompanyEntity
     {
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
         public bool? IsDeleted { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
