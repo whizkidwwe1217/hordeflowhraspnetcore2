@@ -49,7 +49,7 @@ namespace HordeFlow.HR
         {
             services.AddMvc();
 
-            var connection = Configuration.GetConnectionString("AppHarbor");
+            var connection = Configuration.GetConnectionString("DefaultConnection");
             var engineConfig = Configuration.GetSection("ServerSettings");
             if(engineConfig["Engine"] == "SqlServer")
                 services.AddDbContextPool<HrContext>(options => options.UseSqlServer(connection));
@@ -128,6 +128,7 @@ namespace HordeFlow.HR
             #endregion
 
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<ISeeder, Seeder>();
             
             #region Documentation
             // API Documentation
@@ -139,7 +140,7 @@ namespace HordeFlow.HR
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -165,15 +166,16 @@ namespace HordeFlow.HR
 
             #region Database Seed
             // Runs migrations and seeds data that will ensure that the database exists or created.
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<HrContext>();
-                if(!context.AllMigrationsApplied())
-                {
-                    context.Database.Migrate();
-                    context.EnsureSeeded();
-                }
-            }
+            // using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            // {
+            //     var context = serviceScope.ServiceProvider.GetService<HrContext>();
+            //     if(!context.AllMigrationsApplied())
+            //     {
+            //         context.Database.Migrate();
+            //         context.EnsureSeededAsync(app.ApplicationServices).Wait();
+            //     }
+            // }
+            seeder.EnsureSeededAsync().Wait();
             #endregion
         }
     }

@@ -17,7 +17,7 @@ namespace HordeFlow.HR.Infrastructure
             .Build();
             var builder = new DbContextOptionsBuilder<HrContext>();
             var engineConfig = configuration.GetSection("ServerSettings");
-            var connectionString = configuration.GetConnectionString("AppHarbor");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             if(engineConfig["Engine"] == "SqlServer")
                 builder.UseSqlServer(connectionString);
             else if(engineConfig["Engine"] == "Sqlite")

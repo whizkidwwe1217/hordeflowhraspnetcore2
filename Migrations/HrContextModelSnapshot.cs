@@ -18,7 +18,8 @@ namespace HordeFlow.HR.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Address", b =>
                 {
@@ -214,7 +215,8 @@ namespace HordeFlow.HR.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId", "Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.ToTable("Departments");
                 });
@@ -251,7 +253,8 @@ namespace HordeFlow.HR.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId", "Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.ToTable("Designations");
                 });
@@ -477,7 +480,8 @@ namespace HordeFlow.HR.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles");
                 });
@@ -570,7 +574,8 @@ namespace HordeFlow.HR.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId", "Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.ToTable("Teams");
                 });
@@ -668,7 +673,8 @@ namespace HordeFlow.HR.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
