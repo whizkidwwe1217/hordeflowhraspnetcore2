@@ -11,7 +11,6 @@ namespace HordeFlow.HR.Infrastructure.Configurations
         {
             b.Property(e => e.Active).HasDefaultValue(true);
             b.Property(e => e.UserName).HasMaxLength(50).IsRequired();
-            b.Property(e => e.ConcurrencyStamp).HasMaxLength(300);
             b.Property(e => e.ConfirmPassword).HasMaxLength(50);
             b.Property(e => e.Password).HasMaxLength(50).IsRequired();
             b.Property(e => e.PasswordHash).HasMaxLength(300);

@@ -1,5 +1,6 @@
 using HordeFlow.HR.Infrastructure.Extensions;
 using HordeFlow.HR.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,9 @@ namespace HordeFlow.HR.Infrastructure
             modelBuilder.Entity<User>().ToTable("Users").HasKey(u => u.Id);
             modelBuilder.Entity<Role>().ToTable("Roles").HasKey(r => r.Id);
             modelBuilder.Entity<UserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserClaim<int>>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims");
+            modelBuilder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins");
         }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder builder)
