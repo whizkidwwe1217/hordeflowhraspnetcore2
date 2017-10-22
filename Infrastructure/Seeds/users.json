@@ -3,7 +3,7 @@
         "userName": "wendell",
         "password": "x-whizzy1217",
         "active": true,
-        "issystemadministrator": true,
+        "isSystemAdministrator": true,
         "email": "wendell.estrada@hordeflow.com"
     }
 ]

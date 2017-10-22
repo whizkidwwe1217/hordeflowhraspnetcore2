@@ -112,7 +112,7 @@ namespace HordeFlow.HR.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public virtual async Task<IActionResult> Delete(int id)
         {
             var persistedEntity = await repository.Get(id);
             if(persistedEntity == null)

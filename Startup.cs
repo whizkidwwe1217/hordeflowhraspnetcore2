@@ -125,6 +125,7 @@ namespace HordeFlow.HR
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IEmployeeAddressRepository, EmployeeAddressRepository>();
             services.AddTransient<ICompanyAddressRepository, CompanyAddressRepository>();
             #endregion
