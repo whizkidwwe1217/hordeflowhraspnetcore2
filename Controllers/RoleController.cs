@@ -33,5 +33,13 @@ namespace HordeFlow.HR.Controllers
             ModelState.AddModelError("", "Role doesn't exists.");
             return NotFound();
         }
+
+        public override async Task<IActionResult> Create([FromBody] Role role)
+        {
+            if(ModelState.IsValid)
+            {
+                
+            }
+        }
     }
 }

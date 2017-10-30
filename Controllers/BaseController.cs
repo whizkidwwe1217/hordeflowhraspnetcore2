@@ -88,7 +88,7 @@ namespace HordeFlow.HR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]T entity)
+        public virtual async Task<IActionResult> Create([FromBody]T entity)
         {
             if(entity == null)
                 return BadRequest();
