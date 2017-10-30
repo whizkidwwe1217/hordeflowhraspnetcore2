@@ -6,6 +6,7 @@ namespace HordeFlow.HR.Repositories
     public interface ICompanyRepository: IRepository<Company> {}
     public interface IEmployeeRepository : IRepository<Employee> {}
     public interface IUserRepository : IRepository<User> {}
+    public interface IRoleRepository : IRepository<Role> {}
     public interface ITeamRepository: IRepository<Team> {}
     public interface IDepartmentRepository: IRepository<Department> {}
     public interface IDesignationRepository: IRepository<Designation> {}

@@ -48,7 +48,7 @@ namespace HordeFlow.HR.Infrastructure
             if(!AllMigrationsApplied())
                 await context.Database.MigrateAsync();
 
-            //await context.Database.EnsureCreatedAsync();
+            await context.Database.EnsureCreatedAsync();
 
             if(!context.Companies.Any())
             {
