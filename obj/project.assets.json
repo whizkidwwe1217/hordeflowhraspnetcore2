@@ -13490,11 +13490,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\whizk\\Documents\\Projects\\Web\\Servers\\HordeFlow.HR\\HordeFlow.HR.csproj",
+      "projectUniqueName": "c:\\Users\\whizk\\Documents\\Projects\\Web\\Servers\\HordeFlow.HR\\HordeFlow.HR.csproj",
       "projectName": "HordeFlow.HR",
-      "projectPath": "C:\\Users\\whizk\\Documents\\Projects\\Web\\Servers\\HordeFlow.HR\\HordeFlow.HR.csproj",
+      "projectPath": "c:\\Users\\whizk\\Documents\\Projects\\Web\\Servers\\HordeFlow.HR\\HordeFlow.HR.csproj",
       "packagesPath": "C:\\Users\\whizk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\whizk\\Documents\\Projects\\Web\\Servers\\HordeFlow.HR\\obj\\",
+      "outputPath": "c:\\Users\\whizk\\Documents\\Projects\\Web\\Servers\\HordeFlow.HR\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

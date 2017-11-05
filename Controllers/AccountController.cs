@@ -69,12 +69,6 @@ namespace HordeFlow.HR.Controllers
         [Route("[action]")]
         public async Task<IActionResult> GenerateToken([FromBody] LoginViewModel model)
         {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, "whizkidwwe1217@live.com"),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            };
-
             var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (!result.Succeeded)
             {
@@ -82,6 +76,13 @@ namespace HordeFlow.HR.Controllers
             }
             
             var user = await userManager.FindByNameAsync(model.UserName);
+            var userClaims = await userManager.GetClaimsAsync(user);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, "whizkidwwe1217@live.com"),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            }.Union(userClaims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenAuthentication:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -161,6 +162,8 @@ namespace HordeFlow.HR.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("[action]")]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -171,6 +174,37 @@ namespace HordeFlow.HR.Controllers
             var result = await userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
                 return Ok();
+            return BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        [Route("[action]")]
+        public async Task<IActionResult> GetClaims(int id)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if(user != null)
+            {
+                var claims = await userManager.GetClaimsAsync(user);
+                return Ok(claims);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("{id}")]
+        [Route("[action]")]
+        public async Task<IActionResult> CreateClaim(int id, [FromBody] ClaimViewModel claimViewModel)
+        {
+            var user = await userManager.FindByIdAsync(id.ToString());
+            if(user != null)
+            {
+                var claim = new Claim(claimViewModel.Type, claimViewModel.Value);
+                var result = await userManager.AddClaimAsync(user, claim);
+                if(result.Succeeded)
+                {
+                    return Ok(claim);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, result.Errors.First().Description);
+            }
             return BadRequest();
         }
     }
