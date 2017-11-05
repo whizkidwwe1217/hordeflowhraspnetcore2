@@ -112,15 +112,17 @@ namespace HordeFlow.HR.Controllers
                 {
                     var user = new User()
                     {
-                        Active = false,
+                        Active = model.Active,
                         Email = model.Email,
                         Password = model.Password,
-                        ConfirmPassword = model.Password,
+                        ConfirmPassword = model.ConfirmPassword,
                         RecoveryEmail = model.RecoveryEmail,
                         MobileNo = model.MobileNo,
-                        IsSystemAdministrator = false,
+                        IsSystemAdministrator = model.IsSystemAdministrator,
                         IsConfirmed = false,
-                        UserName = model.UserName
+                        UserName = model.UserName,
+                        LockoutEnabled = model.LockoutEnabled,
+                        TwoFactorEnabled = model.TwoFactorEnabled
                     };
                     var result = await userManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
@@ -136,10 +138,13 @@ namespace HordeFlow.HR.Controllers
                             subject: "Confirm Email",
                             message: callbackUrl
                         );
+
+                        return Ok(new { message = "User account registered successfully.", success = true });                        
                     }
                     // await context.Users.AddAsync(user);
                     // await context.SaveChangesAsync();
-                    return Ok(new { message = "User registered successfully.", success = true });
+                    return BadRequest(new { message = "Failed to register user account.",
+                        errors = result.Errors, success = false });
                 }
                 catch (Exception ex)
                 {

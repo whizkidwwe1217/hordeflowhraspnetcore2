@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using HordeFlow.HR.Infrastructure.Models;
 using HordeFlow.HR.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,12 +21,12 @@ namespace HordeFlow.HR.Controllers
         }
 
         public override async Task<IActionResult> Delete(int id)
-        {   
+        {
             Role role = await roleManager.FindByIdAsync(id.ToString());
-            if(role != null)
+            if (role != null)
             {
                 IdentityResult result = await roleManager.DeleteAsync(role);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     return NoContent();
                 }
@@ -36,10 +37,22 @@ namespace HordeFlow.HR.Controllers
 
         public override async Task<IActionResult> Create([FromBody] Role role)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                
+                var found = repository.Get(e => e.CompanyId == role.CompanyId && e.Name == role.Name);
+                if (found != null)
+                {
+                    ModelState.AddModelError("", "Role already exists.");
+                    return StatusCode(StatusCodes.Status409Conflict, found);
+                }
+
+                IdentityResult result = await roleManager.CreateAsync(role);
+                if(result.Succeeded)
+                {
+                    return CreatedAtAction("Get", new { id = role.Id }, role);
+                }
             }
+            return BadRequest();
         }
     }
 }

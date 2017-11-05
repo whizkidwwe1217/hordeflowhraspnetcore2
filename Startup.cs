@@ -47,8 +47,6 @@ namespace HordeFlow.HR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
             var serverSettings = Configuration.GetSection("ServerSettings");
             var connectionString = Configuration.GetConnectionString(serverSettings["ConnectionStringKey"] == null ? "DefaultConnection" : serverSettings["ConnectionStringKey"]);
             if(serverSettings["Engine"] == "SqlServer")
@@ -113,6 +111,8 @@ namespace HordeFlow.HR
             });
 
             #endregion
+
+            services.AddMvc();            
 
             #region Entity Framework Data Repositories
             // Register Repositories

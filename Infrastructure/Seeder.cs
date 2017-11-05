@@ -50,19 +50,23 @@ namespace HordeFlow.HR.Infrastructure
 
             await context.Database.EnsureCreatedAsync();
 
-            if(!context.Companies.Any())
+            var companies = JsonConvert.DeserializeObject<List<Company>>(File.ReadAllText(seedsDir + "companies.json"));
+            
+            foreach(Company c in companies)
             {
-                var companies = JsonConvert.DeserializeObject<List<Company>>(File.ReadAllText(seedsDir + "companies.json"));
-                await context.AddRangeAsync(companies);
-                await context.SaveChangesAsync();
+                if(await context.Companies.Where(e => e.Code == c.Code).FirstOrDefaultAsync() == null)
+                {
+                    await context.AddAsync(c);
+                    await context.SaveChangesAsync();
+                }
             }
 
             var role = "SuperUser";
+            var company = await context.Companies.FirstAsync();
 
-            if(!context.Users.Any())
+            if(company != null)
             {
                 var users = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(seedsDir + "users.json"));
-                var company = await context.Companies.FirstAsync();
 
                 foreach(User u in users)
                 {

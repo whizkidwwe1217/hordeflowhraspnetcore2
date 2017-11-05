@@ -12,8 +12,8 @@ using System;
 namespace HordeFlow.HR.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20171019113047_SqlServer_InitialMigration")]
-    partial class SqlServer_InitialMigration
+    [Migration("20171101130622_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HordeFlow.HR.Migrations
 {
-    public partial class SqlServer_InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
