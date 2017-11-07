@@ -190,11 +190,11 @@ namespace HordeFlow.HR.Controllers
             return BadRequest();
         }
 
-        [HttpPost("{id}")]
+        [HttpPost()]
         [Route("[action]")]
-        public async Task<IActionResult> CreateClaim(int id, [FromBody] ClaimViewModel claimViewModel)
+        public async Task<IActionResult> CreateClaim([FromBody] ClaimViewModel claimViewModel)
         {
-            var user = await userManager.FindByIdAsync(id.ToString());
+            var user = await userManager.FindByIdAsync(claimViewModel.UserId.ToString());
             if(user != null)
             {
                 var claim = new Claim(claimViewModel.Type, claimViewModel.Value);
