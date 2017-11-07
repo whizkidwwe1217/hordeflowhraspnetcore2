@@ -33,6 +33,7 @@ namespace HordeFlow.HR.Controllers
 
         [HttpGet]
         [Route("[action]")]
+        //[Authorize(Policy = "CanSearch")]
         [ClaimRequirement(CompanyClaimTypes.Permission, "CanSearch")]
         public async Task<IActionResult> Search(int? currentPage = 1, int? pageSize = 100, string filter = "", string sort = "", string fields = "")
         {
