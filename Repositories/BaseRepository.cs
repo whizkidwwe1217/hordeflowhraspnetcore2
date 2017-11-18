@@ -66,17 +66,17 @@ namespace HordeFlow.HR.Repositories
 
         public async Task<T> Get(int id)
         {
-            return await context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+            return await context.Set<T>().FirstAsync(x => x.Id == id);
         }
 
         public async Task<T> Seek(int id)
         {
-            return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await context.Set<T>().AsNoTracking().FirstAsync(x => x.Id == id);
         }
 
         public async Task<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return await context.Set<T>().FirstOrDefaultAsync(predicate);
+            return await context.Set<T>().FirstAsync(predicate);
         }
 
         public async Task<T> Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
@@ -87,7 +87,7 @@ namespace HordeFlow.HR.Repositories
                 query = query.Include(includeProperty);
             }
 
-            return await query.Where(predicate).FirstOrDefaultAsync();
+            return await query.Where(predicate).FirstAsync();
         }
 
         public async Task<IResponseData<T>> List()

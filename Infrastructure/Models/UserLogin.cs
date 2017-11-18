@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HordeFlow.HR.Infrastructure.Models
 {
-    public class UserRole : IdentityUserRole<int>
-    {          
+    public class UserLogin : IdentityUserLogin<int>
+    {        
+ 
     }
 }

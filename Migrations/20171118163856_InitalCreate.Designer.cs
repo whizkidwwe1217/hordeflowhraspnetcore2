@@ -7,19 +7,20 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
 namespace HordeFlow.HR.Migrations
 {
     [DbContext(typeof(HrContext))]
-    [Migration("20171101130622_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20171118163856_InitalCreate")]
+    partial class InitalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Address", b =>
@@ -393,45 +394,6 @@ namespace HordeFlow.HR.Migrations
                     b.ToTable("EmployeeAddresses");
                 });
 
-            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool?>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(true);
-
-                    b.Property<int?>("CompanyId");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200);
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<int?>("UserCreatedId");
-
-                    b.Property<int?>("UserModifiedId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("Permissions");
-                });
-
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -461,7 +423,7 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(256);
+                        .HasMaxLength(50);
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
@@ -480,23 +442,6 @@ namespace HordeFlow.HR.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.RolePermission", b =>
-                {
-                    b.Property<int>("RoleId");
-
-                    b.Property<int>("PermissionId");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("RoleId", "PermissionId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.State", b =>
@@ -653,7 +598,7 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(256);
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -670,23 +615,6 @@ namespace HordeFlow.HR.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("RoleId");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoles");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -696,6 +624,9 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<string>("ClaimValue");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<int>("RoleId");
 
                     b.HasKey("Id");
@@ -703,6 +634,8 @@ namespace HordeFlow.HR.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaims");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRoleClaim<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -714,6 +647,9 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<string>("ClaimValue");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
@@ -721,6 +657,8 @@ namespace HordeFlow.HR.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserClaims");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserClaim<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
@@ -728,6 +666,9 @@ namespace HordeFlow.HR.Migrations
                     b.Property<string>("LoginProvider");
 
                     b.Property<string>("ProviderKey");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -738,6 +679,8 @@ namespace HordeFlow.HR.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserLogins");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserLogin<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
@@ -746,11 +689,16 @@ namespace HordeFlow.HR.Migrations
 
                     b.Property<int>("RoleId");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("UserRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<int>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -765,7 +713,47 @@ namespace HordeFlow.HR.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("UserTokens");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.RoleClaim", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>");
+
+
+                    b.ToTable("RoleClaims");
+
+                    b.HasDiscriminator().HasValue("RoleClaim");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserClaim", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>");
+
+
+                    b.ToTable("UserClaims");
+
+                    b.HasDiscriminator().HasValue("UserClaim");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserLogin", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>");
+
+
+                    b.ToTable("UserLogins");
+
+                    b.HasDiscriminator().HasValue("UserLogin");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<int>");
+
+
+                    b.ToTable("UserRoles");
+
+                    b.HasDiscriminator().HasValue("UserRole");
                 });
 
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Address", b =>
@@ -843,31 +831,11 @@ namespace HordeFlow.HR.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Permission", b =>
-                {
-                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-                });
-
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Role", b =>
                 {
                     b.HasOne("HordeFlow.HR.Infrastructure.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
-                });
-
-            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.RolePermission", b =>
-                {
-                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Permission", "Permission")
-                        .WithMany("Roles")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Role", "Role")
-                        .WithMany("Permissions")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.State", b =>
@@ -890,19 +858,6 @@ namespace HordeFlow.HR.Migrations
                     b.HasOne("HordeFlow.HR.Infrastructure.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
-                });
-
-            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserRole", b =>
-                {
-                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HordeFlow.HR.Infrastructure.Models.User", "User")
-                        .WithMany("Roles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

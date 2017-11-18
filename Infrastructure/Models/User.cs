@@ -12,50 +12,8 @@ namespace HordeFlow.HR.Infrastructure.Models
         {
             this.UserName = userName;
             this.IsSystemAdministrator = false;
-            this.GetDatabaseUserRolesPermissions();
         }
 
-        public void GetDatabaseUserRolesPermissions()
-        {
-
-        }
-
-        public bool HasPermission(string requiredPermission)
-        {
-            var found = false;
-            foreach (UserRole role in this.Roles)
-            {
-                found = (role.Role.Permissions.Where(p => p.Permission.Description == requiredPermission).ToList().Count > 0);
-                if (found)
-                    break;
-            }
-            return found;
-        }
-
-        public bool HasRole(string role)
-        {
-            return Roles.Where(p => p.Role.Name == role).ToList().Count > 0;
-        }
-
-        public bool HasRoles(string roles)
-        {
-            var found = false;
-            var _roles = roles.ToLower().Split(';');
-            foreach (UserRole role in this.Roles)
-            {
-                try
-                {
-                    found = _roles.Contains(role.Role.Name.ToLower());
-                    if (found)
-                        return found;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            return found;
-        }
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [DataType(DataType.Password)]        
@@ -65,6 +23,5 @@ namespace HordeFlow.HR.Infrastructure.Models
         public bool? IsConfirmed { get; set; }
         public bool? IsSystemAdministrator { get; set; }
         public bool? Active { get; set; }
-        public ICollection<UserRole> Roles { get; set; }
     }
 }
