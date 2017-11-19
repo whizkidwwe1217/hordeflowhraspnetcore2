@@ -23,5 +23,6 @@ namespace HordeFlow.HR.Infrastructure.Models
         public bool? IsConfirmed { get; set; }
         public bool? IsSystemAdministrator { get; set; }
         public bool? Active { get; set; }
+        public virtual ICollection<UserGroup> Groups { get; set; }
     }
 }

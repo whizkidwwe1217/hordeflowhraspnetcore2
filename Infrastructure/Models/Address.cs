@@ -14,7 +14,7 @@ namespace HordeFlow.HR.Infrastructure.Models
         public int? StateId { get; set; }
         public State State { get; set; }
 
-        public ICollection<EmployeeAddress> EmployeeAddresses { get; set; }
-        public ICollection<CompanyAddress> CompanyAddresses { get; set; }
+        public virtual ICollection<EmployeeAddress> EmployeeAddresses { get; set; }
+        public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
     }
 }

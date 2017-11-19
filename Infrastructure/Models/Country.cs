@@ -7,6 +7,6 @@ namespace HordeFlow.HR.Infrastructure.Models
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public ICollection<State> States { get; set; }
+        public virtual ICollection<State> States { get; set; }
     }
 }

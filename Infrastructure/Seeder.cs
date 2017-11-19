@@ -10,6 +10,8 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using HordeFlow.HR.Infrastructure.Security;
+using System.Security.Claims;
 
 namespace HordeFlow.HR.Infrastructure
 {
@@ -77,8 +79,10 @@ namespace HordeFlow.HR.Infrastructure
                     u.Company = company;
                     u.Active = true;
                     IdentityResult result = await userManager.CreateAsync(u, u.Password);
-                    if (result.Succeeded)
+                    if (result.Succeeded) 
                     {
+                        if(u.IsSystemAdministrator == true)
+                            await userManager.AddClaimAsync(u, new Claim(CompanyClaimTypes.Role, "SuperUser"));
                         await userManager.AddToRoleAsync(u, role);
                     }
                 }

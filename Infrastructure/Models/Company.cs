@@ -10,12 +10,12 @@ namespace HordeFlow.HR.Infrastructure.Models
         public bool? Active { get; set; }
         public int? ParentCompanyId { get; set; }
         public Company ParentCompany { get; set; }
-        public ICollection<Company> Companies { get; set;}
-        public ICollection<Employee> Employees { get; set; }
-        public ICollection<Department> Departments { get; set; }
-        public ICollection<Team> Teams { get; set; }
-        public ICollection<Designation> Designations { get; set; }
+        public virtual ICollection<Company> Companies { get; set;}
+        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Designation> Designations { get; set; }
         public int? CompanyAddressId { get; set; }
-        public ICollection<CompanyAddress> CompanyAddresses { get; set; }
+        public virtual ICollection<CompanyAddress> CompanyAddresses { get; set; }
     }
 }

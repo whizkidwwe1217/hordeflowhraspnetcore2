@@ -17,7 +17,7 @@ namespace HordeFlow.HR.Infrastructure.Security
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
-            if (!hasClaim)
+            if (!hasClaim && !context.HttpContext.User.HasClaim(CompanyClaimTypes.Role, "SuperUser"))
             {
                 context.Result = new ForbidResult();
             }

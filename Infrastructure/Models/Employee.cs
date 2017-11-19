@@ -26,7 +26,7 @@ namespace HordeFlow.HR.Infrastructure.Models
         public string SSS { get; set; }
         public string GSIS { get; set; }
         /* Addresses */
-        public ICollection<EmployeeAddress> EmployeeAddresses { get; set; }
+        public virtual ICollection<EmployeeAddress> EmployeeAddresses { get; set; }
         /* Groupings */
         public int? DesignationId { get; set; }
         public Designation Designation { get; set; }

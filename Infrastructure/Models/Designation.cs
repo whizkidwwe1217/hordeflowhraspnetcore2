@@ -9,6 +9,6 @@ namespace HordeFlow.HR.Infrastructure.Models
         public string Name { get; set; }
         public bool? Active { get; set; }
         [JsonIgnore] 
-        public ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

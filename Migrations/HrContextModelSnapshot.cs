@@ -393,6 +393,53 @@ namespace HordeFlow.HR.Migrations
                     b.ToTable("EmployeeAddresses");
                 });
 
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(50);
+
+                    b.Property<bool?>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("UserCreatedId");
+
+                    b.Property<int?>("UserModifiedId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.GroupRole", b =>
+                {
+                    b.Property<int>("GroupId");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("GroupId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("GroupRoles");
+                });
+
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -614,6 +661,19 @@ namespace HordeFlow.HR.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserGroup", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("GroupId");
+
+                    b.HasKey("UserId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("UserGroups");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -830,6 +890,26 @@ namespace HordeFlow.HR.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Group", b =>
+                {
+                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.GroupRole", b =>
+                {
+                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Group", "Group")
+                        .WithMany("Roles")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Role", "Role")
+                        .WithMany("Groups")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.Role", b =>
                 {
                     b.HasOne("HordeFlow.HR.Infrastructure.Models.Company", "Company")
@@ -857,6 +937,19 @@ namespace HordeFlow.HR.Migrations
                     b.HasOne("HordeFlow.HR.Infrastructure.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId");
+                });
+
+            modelBuilder.Entity("HordeFlow.HR.Infrastructure.Models.UserGroup", b =>
+                {
+                    b.HasOne("HordeFlow.HR.Infrastructure.Models.Group", "Group")
+                        .WithMany("Users")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HordeFlow.HR.Infrastructure.Models.User", "User")
+                        .WithMany("Groups")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

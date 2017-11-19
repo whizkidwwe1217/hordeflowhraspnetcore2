@@ -54,6 +54,9 @@ namespace HordeFlow.HR.Infrastructure
         public DbSet<Address> States { get; set; }
         public DbSet<CompanyAddress> CompanyAddresses { get; set; }
         public DbSet<EmployeeAddress> EmployeeAddresses { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupRole> GroupRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
