@@ -39,8 +39,8 @@ namespace HordeFlow.HR.Controllers
         {
             if (ModelState.IsValid)
             {
-                var found = repository.Get(e => e.CompanyId == role.CompanyId && e.Name == role.Name);
-                if (found != null)
+                var found = await repository.AnyAsync(e => e.CompanyId == role.CompanyId && e.Name == role.Name);
+                if (found)
                 {
                     ModelState.AddModelError("", "Role already exists.");
                     return StatusCode(StatusCodes.Status409Conflict, found);

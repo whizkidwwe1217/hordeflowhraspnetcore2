@@ -39,7 +39,7 @@ namespace HordeFlow.HR.Controllers
         {
             try
             {
-                var entities = await repository.Search(currentPage, pageSize, filter, sort, fields);
+                var entities = await repository.SearchAsync(currentPage, pageSize, filter, sort, fields);
                 return Ok(entities);
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace HordeFlow.HR.Controllers
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> Get(int id)
         {
-            var entity = await repository.Get(id);
+            var entity = await repository.GetAsync(id);
             if (entity != null)
                 return Ok(entity);
             return NotFound(entity);
@@ -65,7 +65,7 @@ namespace HordeFlow.HR.Controllers
                 return BadRequest();
             }
 
-            var persistedEntity = await repository.Seek(id);
+            var persistedEntity = await repository.SeekAsync(id);
             if(persistedEntity == null)
             {
                 return NotFound();   
@@ -98,7 +98,7 @@ namespace HordeFlow.HR.Controllers
 
             try 
             {
-                await repository.Insert(entity);
+                await repository.InsertAsync(entity);
                 await repository.Commit();
                 return CreatedAtAction("Get", new { id = entity.Id }, entity); // This will return the location of the inserted entity.
             }
@@ -117,7 +117,7 @@ namespace HordeFlow.HR.Controllers
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            var persistedEntity = await repository.Get(id);
+            var persistedEntity = await repository.GetAsync(id);
             if(persistedEntity == null)
             {
                 return NotFound();   
@@ -137,7 +137,7 @@ namespace HordeFlow.HR.Controllers
                 foreach (T e in entities.Added)
                 {
                     if (this.ModelState.IsValid)
-                        await repository.Insert(e);
+                        await repository.InsertAsync(e);
                 }
 
                 foreach (T e in entities.Edited)

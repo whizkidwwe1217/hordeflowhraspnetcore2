@@ -35,7 +35,7 @@ namespace HordeFlow.HR.Repositories
             this.context = context;
         }
 
-        public async Task Insert(T entity)
+        public async Task InsertAsync(T entity)
         {
             EntityEntry dbEntityEntry = context.Entry<T>(entity);
             await context.Set<T>().AddAsync(entity);
@@ -54,7 +54,7 @@ namespace HordeFlow.HR.Repositories
             }
         }
 
-        public virtual async Task<int> Count()
+        public virtual async Task<int> CountAsync()
         {
             return await context.Set<T>().CountAsync();
         }
@@ -64,22 +64,27 @@ namespace HordeFlow.HR.Repositories
             return context.Set<T>().Where(predicate);
         }
 
-        public async Task<T> Get(int id)
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await context.Set<T>().Where(predicate).AnyAsync();
+        }
+
+        public async Task<T> GetAsync(int id)
         {
             return await context.Set<T>().FirstAsync(x => x.Id == id);
         }
 
-        public async Task<T> Seek(int id)
+        public async Task<T> SeekAsync(int id)
         {
             return await context.Set<T>().AsNoTracking().FirstAsync(x => x.Id == id);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> predicate)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await context.Set<T>().FirstAsync(predicate);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = context.Set<T>();
             foreach (var includeProperty in includeProperties)
@@ -101,7 +106,7 @@ namespace HordeFlow.HR.Repositories
             return response;
         }
 
-        public async Task<ResponseSearchData> Search(int? currentPage = 1, int? pageSize = 100, string filter = "", string sort = "", string fields = "")
+        public async Task<ResponseSearchData> SearchAsync(int? currentPage = 1, int? pageSize = 100, string filter = "", string sort = "", string fields = "")
         {
             IQueryable<T> query = context.Set<T>();
             var response = new ResponseSearchData

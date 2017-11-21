@@ -17,7 +17,7 @@ namespace HordeFlow.HR.Controllers
         [HttpGet("{id}")]
         public override async Task<IActionResult> Get(int id)
         {
-            var entity = await repository.Get(p => p.Id == id, p => p.Designation);
+            var entity = await repository.GetAsync(p => p.Id == id, p => p.Designation);
             if (entity != null)
                 return Ok(entity);
             return NotFound(entity);
