@@ -20,15 +20,10 @@ namespace HordeFlow.HR.Repositories
     {
         private HrContext context;
 
-        public HrContext Context
-        {
-            get
-            {
-                return this.context;
-            }
+        HrContext IRepository<T>.Context { 
+            get => this.context; 
+            set => throw new NotImplementedException(); 
         }
-
-        HrContext IRepository<T>.Context { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public BaseRepository(HrContext context)
         {

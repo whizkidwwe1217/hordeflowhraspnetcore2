@@ -4,6 +4,9 @@ using HordeFlow.HR.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using HordeFlow.HR.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HordeFlow.HR.Controllers
 {
@@ -47,10 +50,30 @@ namespace HordeFlow.HR.Controllers
                 }
 
                 IdentityResult result = await roleManager.CreateAsync(role);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     return CreatedAtAction("Get", new { id = role.Id }, role);
                 }
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("{id}")]
+        [Route("[action]")]
+        public async Task<IActionResult> GetMembers(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var users = from ur in repository.Context.UserRoles
+                            join u in repository.Context.Users on ur.UserId equals u.Id
+                            where ur.RoleId == id
+                            select u;
+                var response = new ResponseData<User>
+                {
+                    data = await users.ToListAsync(),
+                    total = await users.CountAsync()
+                };
+                return Ok(response);
             }
             return BadRequest();
         }
