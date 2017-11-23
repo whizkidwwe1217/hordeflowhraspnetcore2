@@ -167,7 +167,10 @@ namespace HordeFlow.HR
             });
             #endregion
 
-            app.UseMvc();
+            app.UseStaticFiles();
+            app.UseMvc(routes => {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             #region Database Seed
             // Runs migrations and seeds data that will ensure that the database exists or created.

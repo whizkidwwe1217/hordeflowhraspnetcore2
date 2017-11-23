@@ -13496,9 +13496,6 @@
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
       "projectUniqueName": "C:\\Projects\\Experiments\\HordeFlow.HR\\HordeFlow.HR.csproj",
       "projectName": "HordeFlow.HR",
@@ -13534,19 +13531,32 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
-          "Pomelo.EntityFrameworkCore.MySql": {
+          "Microsoft.NETCore.App": {
             "target": "Package",
-            "version": "2.0.0.1"
+            "version": "2.0.0",
+            "autoReferenced": true
           },
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+          "Microsoft.AspNetCore.All": {
             "target": "Package",
-            "version": "2.0.1"
+            "version": "2.0.3"
           },
           "Microsoft.AspNetCore.Authentication.Cookies": {
             "target": "Package",
             "version": "2.0.1"
           },
-          "Microsoft.EntityFrameworkCore.Tools": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "target": "Package",
+            "version": "2.0.1"
+          },
+          "Microsoft.AspNetCore.Identity": {
+            "target": "Package",
+            "version": "2.0.1"
+          },
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "2.0.1"
+          },
+          "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "2.0.1"
           },
@@ -13554,32 +13564,19 @@
             "target": "Package",
             "version": "2.0.1"
           },
-          "Microsoft.NETCore.App": {
-            "target": "Package",
-            "version": "2.0.0",
-            "autoReferenced": true
-          },
-          "Microsoft.AspNetCore.Authentication.JwtBearer": {
+          "Microsoft.EntityFrameworkCore.Tools": {
             "target": "Package",
             "version": "2.0.1"
           },
-          "Microsoft.EntityFrameworkCore.Sqlite": {
+          "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
-            "version": "2.0.1"
+            "version": "2.0.0.1"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "1.1.0"
           },
-          "Microsoft.EntityFrameworkCore.SqlServer": {
-            "target": "Package",
-            "version": "2.0.1"
-          },
-          "Microsoft.AspNetCore.All": {
-            "target": "Package",
-            "version": "2.0.3"
-          },
-          "Microsoft.AspNetCore.Identity": {
+          "Microsoft.EntityFrameworkCore.Sqlite": {
             "target": "Package",
             "version": "2.0.1"
           }

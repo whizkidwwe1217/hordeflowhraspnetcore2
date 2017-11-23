@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using HordeFlow.HR.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using HordeFlow.HR.ViewModels;
 
 namespace HordeFlow.HR.Controllers
 {
@@ -53,6 +54,37 @@ namespace HordeFlow.HR.Controllers
                 if (result.Succeeded)
                 {
                     return CreatedAtAction("Get", new { id = role.Id }, role);
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> AddMember([FromBody] UserRoleViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var found = await repository.Context.UserRoles.AsNoTracking().AnyAsync(e => e.UserId == model.UserId && e.RoleId == model.RoleId);
+                if (found)
+                {
+                    ModelState.AddModelError("", "User is already a member of this role.");
+                    return StatusCode(StatusCodes.Status409Conflict, found);
+                }
+                var role = await roleManager.FindByIdAsync(model.RoleId.ToString());
+                if(role != null)
+                {
+                    var user = await userManager.FindByIdAsync(model.UserId.ToString());
+                    IdentityResult result = await userManager.AddToRoleAsync(user, role.Name);
+                    if(result.Succeeded)
+                    {
+                        return Ok();
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Error assigning a role membership to a user.");
+                }
+                else
+                {
+                    return NotFound();
                 }
             }
             return BadRequest();
